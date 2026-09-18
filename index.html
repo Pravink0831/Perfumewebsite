@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>P K | Fragrance After Dark</title>
     <meta name="description" content="A premium scroll-driven luxury perfume experience.">
-    
+
     <!-- Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    
+
+    <!-- Warm the connection for the hero video as early as possible -->
+    <link rel="preload" as="image" href="assets/hero-poster.jpg">
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <!-- Header -->
     <header class="main-header">
         <div class="header-left">
@@ -27,7 +29,7 @@
         </nav>
         <div class="header-right">
             <a href="#collection" class="btn-discover">Discover</a>
-            <button class="mobile-menu-toggle" aria-label="Open Menu">
+            <button class="mobile-menu-toggle" aria-label="Open Menu" aria-expanded="false">
                 <span></span><span></span>
             </button>
         </div>
@@ -36,18 +38,35 @@
     <!-- Scroll-Controlled Cinematic Hero -->
     <section id="scroll-hero" class="scroll-hero">
         <div class="video-container">
-            <video id="hero-video" 
-                   src="assets/elan-noir-ritual.mp4" 
-                   muted 
-                   playsinline 
-                   preload="auto"
+            <!--
+                NOTE: no `src` attribute here on purpose.
+                The inline script below picks the desktop or mobile encode so the
+                browser never downloads the wrong file. The poster keeps the
+                section filled while the first bytes arrive.
+            -->
+            <video id="hero-video"
+                   muted
+                   playsinline
                    webkit-playsinline
+                   preload="auto"
+                   poster="assets/hero-poster.jpg"
                    aria-hidden="true">
                 Your browser does not support the video tag.
             </video>
             <div class="video-fade-overlay"></div>
         </div>
-        
+
+        <script>
+            /* Adaptive source selection — must run before script.js initialises.
+               Mobile decoders are materially weaker and mobile connections are
+               slower, so small screens get the lighter encode. */
+            (function () {
+                var v = document.getElementById('hero-video');
+                var small = window.matchMedia('(max-width: 768px)').matches;
+                v.src = 'assets/elan-noir-scrub' + (small ? '-mobile' : '') + '.mp4';
+            })();
+        </script>
+
         <div class="scenes-container">
             <!-- Scene 1 -->
             <div class="scene scene-left scene-vert-center">
@@ -57,7 +76,7 @@
                     <p>A fragrance composed for the hours when the world becomes quieter.</p>
                 </div>
             </div>
-            
+
             <!-- Scene 2 -->
             <div class="scene scene-right scene-vert-upper">
                 <div class="scene-content">
@@ -103,12 +122,11 @@
             <h2>Choose Your Essence</h2>
             <p class="supporting-text">Three compositions created for three different hours of the day.</p>
         </div>
-
         <div class="collection-grid">
             <!-- Product 1 -->
             <article class="product-card card-dawn">
                 <div class="card-image-wrap">
-                    <img src="assets/products/product-dawn-veil.png" alt="Dawn Veil Perfume Bottle" loading="lazy">
+                    <img src="assets/products/product-dawn-veil.png" alt="Dawn Veil Perfume Bottle" loading="lazy" width="600" height="800">
                 </div>
                 <div class="card-info">
                     <h3>Dawn Veil</h3>
@@ -122,7 +140,7 @@
             <!-- Product 2 -->
             <article class="product-card card-amber">
                 <div class="card-image-wrap">
-                    <img src="assets/products/product-amber-dusk.png" alt="Amber Dusk Perfume Bottle" loading="lazy">
+                    <img src="assets/products/product-amber-dusk.png" alt="Amber Dusk Perfume Bottle" loading="lazy" width="600" height="800">
                 </div>
                 <div class="card-info">
                     <h3>Amber Dusk</h3>
@@ -136,7 +154,7 @@
             <!-- Product 3 -->
             <article class="product-card card-midnight">
                 <div class="card-image-wrap">
-                    <img src="assets/products/product-midnight-oud.png" alt="Midnight Oud Perfume Bottle" loading="lazy">
+                    <img src="assets/products/product-midnight-oud.png" alt="Midnight Oud Perfume Bottle" loading="lazy" width="600" height="800">
                 </div>
                 <div class="card-info">
                     <h3>Midnight Oud</h3>
@@ -154,7 +172,7 @@
         <div class="notes-content">
             <span class="eyebrow">THE COMPOSITION</span>
             <h2>Built in layers.</h2>
-            
+
             <div class="notes-breakdown">
                 <div class="note-tier">
                     <h4>Top Notes</h4>
@@ -175,20 +193,20 @@
         </div>
         <div class="notes-visual">
             <div class="glow-backdrop"></div>
-            <img src="assets/products/product-midnight-oud.png" alt="Midnight Oud Perfume Layers" class="reveal-image" loading="lazy">
+            <img src="assets/products/product-midnight-oud.png" alt="Midnight Oud Perfume Layers" class="reveal-image" loading="lazy" width="600" height="800">
         </div>
     </section>
 
     <!-- Section 3: Signature Perfume -->
     <section id="signature" class="section-signature">
         <div class="signature-visual">
-            <img src="assets/products/product-midnight-oud.png" alt="Midnight Oud Featured" loading="lazy">
+            <img src="assets/products/product-midnight-oud.png" alt="Midnight Oud Featured" loading="lazy" width="600" height="800">
         </div>
         <div class="signature-content">
             <span class="eyebrow">SIGNATURE EXTRAIT</span>
             <h2>Midnight Oud</h2>
             <p class="desc">A deep and lasting composition where dark rose meets smoked woods, leather and oud.</p>
-            
+
             <ul class="details-list">
                 <li>50 ml</li>
                 <li>Extrait de Parfum</li>
@@ -196,7 +214,6 @@
                 <li>Long-lasting</li>
                 <li>Unisex composition</li>
             </ul>
-
             <div class="action-group">
                 <a href="#" class="btn-primary">Experience Midnight Oud</a>
                 <a href="#notes" class="link-secondary">Explore the notes</a>

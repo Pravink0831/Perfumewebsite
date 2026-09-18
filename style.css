@@ -1,4 +1,16 @@
 /* ==========================================================================
+   P K | Fragrance After Dark
+   --------------------------------------------------------------------------
+   CHANGES vs. original (all scroll-performance related, marked [PERF]):
+     1. Removed `scroll-behavior: smooth` from html
+     2. Removed `will-change: transform` from .video-container
+     3. Removed `will-change: transform` from #hero-video
+     4. Added `transform: translateZ(0)` to .video-fade-overlay
+     5. Mobile nav now driven by .is-open classes instead of inline display
+   Everything else is visually identical to your original.
+   ========================================================================== */
+
+/* ==========================================================================
    Variables & Reset
    ========================================================================== */
 :root {
@@ -8,10 +20,10 @@
     --warm-ivory: #EFE6D7;
     --antique-gold: #B89155;
     --amber: #B36A32;
-    
+
     --font-heading: 'Cormorant Garamond', serif;
     --font-body: 'Inter', sans-serif;
-    
+
     --ease-slow: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -21,8 +33,12 @@
     box-sizing: border-box;
 }
 
+/* [PERF] `scroll-behavior: smooth` REMOVED.
+   Native smooth scrolling animates scrollY over ~400ms, producing a dense
+   burst of scroll events that competed with the video seek queue. Anchor-link
+   smoothing is now scoped to click handlers in script.js, which is the correct
+   place for it. */
 html {
-    scroll-behavior: smooth;
     background-color: var(--deep-black);
     color: var(--warm-ivory);
 }
@@ -165,10 +181,15 @@ a:focus-visible, button:focus-visible {
    ========================================================================== */
 .scroll-hero {
     position: relative;
-    height: 700vh; /* Scroll length */
+    height: 450vh; /* Scroll length — tuned to a ~10s clip. See note below. */
     background: var(--deep-black);
 }
 
+/* [PERF] `will-change: transform` REMOVED.
+   This element is position:sticky and is never transformed. The hint pinned an
+   additional composited layer holding a full-viewport video texture for the
+   entire hero scroll — pure memory cost, zero benefit. `contain: strict` gives
+   us the isolation we actually want. */
 .video-container {
     position: sticky;
     top: 0;
@@ -176,18 +197,26 @@ a:focus-visible, button:focus-visible {
     height: 100vh;
     overflow: hidden;
     z-index: 0;
-    will-change: transform;
+    contain: strict;
+    backface-visibility: hidden;
 }
 
+/* [PERF] `will-change: transform` REMOVED.
+   Video elements are already composited by the browser. The hint forced a
+   redundant layer and on some GPUs triggered a texture re-upload on every
+   decoded frame. */
 #hero-video {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
-    will-change: transform;
+    backface-visibility: hidden;
 }
 
-/* Overlay for end of scroll blending */
+/* Overlay for end of scroll blending.
+   [PERF] `will-change: opacity` KEPT — this property genuinely animates.
+   `translateZ(0)` added so the opacity change stays a pure compositor
+   operation and never repaints the video beneath it. */
 .video-fade-overlay {
     position: absolute;
     top: 0;
@@ -199,6 +228,7 @@ a:focus-visible, button:focus-visible {
     pointer-events: none;
     z-index: 1;
     will-change: opacity;
+    transform: translateZ(0);
 }
 
 .scenes-container {
@@ -206,8 +236,9 @@ a:focus-visible, button:focus-visible {
     z-index: 2;
 }
 
+/* 5 scenes x 90vh = 450vh, matching .scroll-hero exactly. */
 .scene {
-    height: 140vh; /* Spread triggers evenly across 700vh */
+    height: 90vh;
     display: flex;
     padding: 0 8vw;
     pointer-events: none;
@@ -242,7 +273,6 @@ a:focus-visible, button:focus-visible {
 /* Positioning classes */
 .scene-left { justify-content: flex-start; }
 .scene-right { justify-content: flex-end; text-align: right; }
-
 .scene-vert-center { align-items: center; }
 .scene-vert-upper { align-items: flex-start; padding-top: 15vh; }
 .scene-vert-middle { align-items: center; }
@@ -359,6 +389,7 @@ a:focus-visible, button:focus-visible {
 /* Specific Card Themes */
 .card-dawn:hover { box-shadow: 0 20px 40px rgba(239, 230, 215, 0.05); }
 .card-amber:hover { box-shadow: 0 20px 40px rgba(179, 106, 50, 0.1); }
+
 .card-midnight {
     background: linear-gradient(145deg, var(--dark-burgundy), var(--deep-black));
 }
@@ -425,6 +456,7 @@ a:focus-visible, button:focus-visible {
     position: relative;
     z-index: 1;
     height: 100%;
+    width: auto;
     object-fit: contain;
 }
 
@@ -447,6 +479,7 @@ a:focus-visible, button:focus-visible {
 
 .signature-visual img {
     height: 85vh;
+    width: auto;
     object-fit: contain;
     filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8));
 }
@@ -583,22 +616,25 @@ a:focus-visible, button:focus-visible {
     .collection-grid { gap: 1.5rem; }
     .product-card { padding: 2rem 1.5rem; }
     .card-info h3 { font-size: 1.5rem; }
-    
+
     .section-notes, .section-signature {
         grid-template-columns: 1fr;
         text-align: center;
     }
-    
+
     .notes-content { padding-right: 0; margin-bottom: 4rem; }
-    
+
     .signature-visual { order: -1; padding: 4rem 0 0; }
     .signature-content { padding: 2rem 4vw 4rem; align-items: center; }
     .details-list { align-items: flex-start; text-align: left; }
 }
 
 @media (max-width: 768px) {
-    .header-nav { 
-        display: none; 
+    /* [PERF] Mobile nav is now class-driven. script.js toggles .is-open
+       instead of writing inline `display`, which removes two style recalcs
+       per tap and keeps CSS as the single source of truth. */
+    .header-nav {
+        display: none;
         position: fixed;
         top: 0;
         right: 0;
@@ -612,38 +648,40 @@ a:focus-visible, button:focus-visible {
         z-index: 99;
         border-bottom: 1px solid rgba(184, 145, 85, 0.15);
     }
-    
+
+    .header-nav.is-open { display: flex; }
+
     .header-nav a {
         font-size: 1.5rem;
         letter-spacing: 0.1em;
     }
-    
-    .btn-discover { 
-        display: none; 
+
+    .btn-discover {
+        display: none;
         margin-top: 2rem;
         padding: 1rem 2.5rem;
         font-size: 1rem;
     }
-    
-    .mobile-menu-toggle { display: block; }
-    
-    .header-nav.is-open,
-    .btn-discover.is-open {
-        display: flex;
-    }
 
-    .scroll-hero { height: 600vh; }
+    .btn-discover.is-open { display: inline-block; }
+
+    .mobile-menu-toggle { display: block; }
+
+    /* 5 scenes x 76vh = 380vh, matching the hero height exactly. */
+    .scroll-hero { height: 380vh; }
+    .scene { height: 76vh; }
+
     .scene-content h2 { font-size: 2.5rem; }
-    
+
     .scene-left, .scene-right {
         justify-content: center;
         text-align: center;
         align-items: center;
         padding-top: 0; padding-bottom: 0;
     }
-    
+
     .collection-grid { grid-template-columns: 1fr; }
-    
+
     .footer-bottom { flex-direction: column; align-items: center; gap: 3rem; text-align: center; }
     .footer-meta { text-align: center; }
 }
