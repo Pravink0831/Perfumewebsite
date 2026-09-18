@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
-    <!-- Warm the connection for the hero video as early as possible -->
+    <!-- Poster loads first so the hero is never blank while the video buffers -->
     <link rel="preload" as="image" href="assets/hero-poster.jpg">
 
     <link rel="stylesheet" href="style.css">
@@ -39,33 +39,32 @@
     <section id="scroll-hero" class="scroll-hero">
         <div class="video-container">
             <!--
-                NOTE: no `src` attribute here on purpose.
-                The inline script below picks the desktop or mobile encode so the
-                browser never downloads the wrong file. The poster keeps the
-                section filled while the first bytes arrive.
+                IMPORTANT: no `src` attribute, and no `preload`.
+                script.js fetches the correct encode (desktop or mobile) in full,
+                then hands it to this element as a blob: URL. A `src` here would
+                trigger a second, redundant download.
             -->
             <video id="hero-video"
                    muted
                    playsinline
                    webkit-playsinline
-                   preload="auto"
+                   preload="none"
                    poster="assets/hero-poster.jpg"
                    aria-hidden="true">
                 Your browser does not support the video tag.
             </video>
-            <div class="video-fade-overlay"></div>
-        </div>
 
-        <script>
-            /* Adaptive source selection — must run before script.js initialises.
-               Mobile decoders are materially weaker and mobile connections are
-               slower, so small screens get the lighter encode. */
-            (function () {
-                var v = document.getElementById('hero-video');
-                var small = window.matchMedia('(max-width: 768px)').matches;
-                v.src = 'assets/elan-noir-scrub' + (small ? '-mobile' : '') + '.mp4';
-            })();
-        </script>
+            <div class="video-fade-overlay"></div>
+
+            <!-- Buffering indicator. Sits over the poster while the video
+                 downloads, then fades out. -->
+            <div class="hero-loader" role="status" aria-live="polite">
+                <span class="hero-loader__label">Preparing the ritual</span>
+                <div class="hero-loader__track">
+                    <div class="hero-loader__bar"></div>
+                </div>
+            </div>
+        </div>
 
         <div class="scenes-container">
             <!-- Scene 1 -->
@@ -123,7 +122,6 @@
             <p class="supporting-text">Three compositions created for three different hours of the day.</p>
         </div>
         <div class="collection-grid">
-            <!-- Product 1 -->
             <article class="product-card card-dawn">
                 <div class="card-image-wrap">
                     <img src="assets/products/product-dawn-veil.png" alt="Dawn Veil Perfume Bottle" loading="lazy" width="600" height="800">
@@ -137,7 +135,6 @@
                 </div>
             </article>
 
-            <!-- Product 2 -->
             <article class="product-card card-amber">
                 <div class="card-image-wrap">
                     <img src="assets/products/product-amber-dusk.png" alt="Amber Dusk Perfume Bottle" loading="lazy" width="600" height="800">
@@ -151,7 +148,6 @@
                 </div>
             </article>
 
-            <!-- Product 3 -->
             <article class="product-card card-midnight">
                 <div class="card-image-wrap">
                     <img src="assets/products/product-midnight-oud.png" alt="Midnight Oud Perfume Bottle" loading="lazy" width="600" height="800">
@@ -238,7 +234,7 @@
             </nav>
             <div class="footer-meta">
                 <p>Created for the hours between light and memory.</p>
-                <p class="copyright">&copy; 2026 P K / Élan Noir. All rights reserved.</p>
+                <p class="copyright">&copy; 2026 P K / &Eacute;lan Noir. All rights reserved.</p>
             </div>
         </div>
     </footer>
