@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P K | Fragrance After Dark</title>
+    <meta name="description" content="A premium scroll-driven luxury perfume experience.">
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-left">
+            <a href="#" class="brand-logo" aria-label="P K Home">P K</a>
+        </div>
+        <nav class="header-nav">
+            <a href="#collection">Collection</a>
+            <a href="#notes">Notes</a>
+            <a href="#signature">Midnight Oud</a>
+        </nav>
+        <div class="header-right">
+            <a href="#collection" class="btn-discover">Discover</a>
+            <button class="mobile-menu-toggle" aria-label="Open Menu">
+                <span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Scroll-Controlled Cinematic Hero -->
+    <section id="scroll-hero" class="scroll-hero">
+        <div class="video-container">
+            <video id="hero-video" 
+                   src="assets/elan-noir-ritual.mp4" 
+                   muted 
+                   playsinline 
+                   preload="auto"
+                   webkit-playsinline
+                   aria-hidden="true">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-fade-overlay"></div>
+        </div>
+        
+        <div class="scenes-container">
+            <!-- Scene 1 -->
+            <div class="scene scene-left scene-vert-center">
+                <div class="scene-content">
+                    <span class="eyebrow">EXTRAIT DE PARFUM</span>
+                    <h2>Night begins with a single note.</h2>
+                    <p>A fragrance composed for the hours when the world becomes quieter.</p>
+                </div>
+            </div>
+            
+            <!-- Scene 2 -->
+            <div class="scene scene-right scene-vert-upper">
+                <div class="scene-content">
+                    <span class="eyebrow">THE AWAKENING</span>
+                    <h2>Every note rises.</h2>
+                    <p>Dark rose, saffron and oud emerge slowly through warmth and shadow.</p>
+                </div>
+            </div>
+
+            <!-- Scene 3 -->
+            <div class="scene scene-left scene-vert-lower">
+                <div class="scene-content">
+                    <span class="eyebrow">THE COMPOSITION</span>
+                    <h2>Elements become emotion.</h2>
+                    <p>Rare materials are layered and transformed into an invisible signature.</p>
+                </div>
+            </div>
+
+            <!-- Scene 4 -->
+            <div class="scene scene-right scene-vert-middle">
+                <div class="scene-content">
+                    <span class="eyebrow">THE EXTRACTION</span>
+                    <h2>Light becomes liquid.</h2>
+                    <p>Amber warmth and deep woods dissolve into fragrance.</p>
+                </div>
+            </div>
+
+            <!-- Scene 5 -->
+            <div class="scene scene-left scene-vert-middle">
+                <div class="scene-content">
+                    <span class="eyebrow">THE RITUAL</span>
+                    <h2>Wear the hour after dark.</h2>
+                    <p>A trace of rose, leather, smoke and oud that remains after you leave.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 1: Choose Your Essence -->
+    <section id="collection" class="section-collection">
+        <div class="section-header">
+            <span class="eyebrow">THE COLLECTION</span>
+            <h2>Choose Your Essence</h2>
+            <p class="supporting-text">Three compositions created for three different hours of the day.</p>
+        </div>
+
+        <div class="collection-grid">
+            <!-- Product 1 -->
+            <article class="product-card card-dawn">
+                <div class="card-image-wrap">
+                    <img src="assets/products/product-dawn-veil.png" alt="Dawn Veil Perfume Bottle" loading="lazy">
+                </div>
+                <div class="card-info">
+                    <h3>Dawn Veil</h3>
+                    <span class="subtitle">EAU DE PARFUM</span>
+                    <p class="desc">Bergamot and white rose softened by jasmine and clean white musk.</p>
+                    <span class="notes-list">Bergamot / White Rose / Musk</span>
+                    <a href="#" class="link-discover">Discover</a>
+                </div>
+            </article>
+
+            <!-- Product 2 -->
+            <article class="product-card card-amber">
+                <div class="card-image-wrap">
+                    <img src="assets/products/product-amber-dusk.png" alt="Amber Dusk Perfume Bottle" loading="lazy">
+                </div>
+                <div class="card-info">
+                    <h3>Amber Dusk</h3>
+                    <span class="subtitle">EAU DE PARFUM</span>
+                    <p class="desc">Saffron, glowing amber and vanilla settling into warm tonka bean.</p>
+                    <span class="notes-list">Saffron / Amber / Vanilla</span>
+                    <a href="#" class="link-discover">Discover</a>
+                </div>
+            </article>
+
+            <!-- Product 3 -->
+            <article class="product-card card-midnight">
+                <div class="card-image-wrap">
+                    <img src="assets/products/product-midnight-oud.png" alt="Midnight Oud Perfume Bottle" loading="lazy">
+                </div>
+                <div class="card-info">
+                    <h3>Midnight Oud</h3>
+                    <span class="subtitle">EXTRAIT DE PARFUM</span>
+                    <p class="desc">Dark rose, smoked cedar and leather wrapped around a powerful oud heart.</p>
+                    <span class="notes-list">Oud / Dark Rose / Leather</span>
+                    <a href="#" class="link-discover">Discover</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Section 2: Fragrance Notes -->
+    <section id="notes" class="section-notes">
+        <div class="notes-content">
+            <span class="eyebrow">THE COMPOSITION</span>
+            <h2>Built in layers.</h2>
+            
+            <div class="notes-breakdown">
+                <div class="note-tier">
+                    <h4>Top Notes</h4>
+                    <span class="ingredients">Bergamot &middot; Saffron &middot; Black Pepper</span>
+                    <p>The first impression: luminous, sharp and fleeting.</p>
+                </div>
+                <div class="note-tier">
+                    <h4>Heart Notes</h4>
+                    <span class="ingredients">Dark Rose &middot; Jasmine &middot; Amber</span>
+                    <p>The emotional centre where warmth and character unfold.</p>
+                </div>
+                <div class="note-tier">
+                    <h4>Base Notes</h4>
+                    <span class="ingredients">Oud &middot; Leather &middot; Smoked Cedar &middot; White Musk</span>
+                    <p>The lasting signature of woods, smoke and skin.</p>
+                </div>
+            </div>
+        </div>
+        <div class="notes-visual">
+            <div class="glow-backdrop"></div>
+            <img src="assets/products/product-midnight-oud.png" alt="Midnight Oud Perfume Layers" class="reveal-image" loading="lazy">
+        </div>
+    </section>
+
+    <!-- Section 3: Signature Perfume -->
+    <section id="signature" class="section-signature">
+        <div class="signature-visual">
+            <img src="assets/products/product-midnight-oud.png" alt="Midnight Oud Featured" loading="lazy">
+        </div>
+        <div class="signature-content">
+            <span class="eyebrow">SIGNATURE EXTRAIT</span>
+            <h2>Midnight Oud</h2>
+            <p class="desc">A deep and lasting composition where dark rose meets smoked woods, leather and oud.</p>
+            
+            <ul class="details-list">
+                <li>50 ml</li>
+                <li>Extrait de Parfum</li>
+                <li>30% perfume concentration</li>
+                <li>Long-lasting</li>
+                <li>Unisex composition</li>
+            </ul>
+
+            <div class="action-group">
+                <a href="#" class="btn-primary">Experience Midnight Oud</a>
+                <a href="#notes" class="link-secondary">Explore the notes</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-top">
+            <div class="brand-huge">P K</div>
+            <span class="footer-tagline">Fragrance After Dark</span>
+        </div>
+        <div class="footer-bottom">
+            <nav class="footer-nav">
+                <a href="#collection">Collection</a>
+                <a href="#notes">Notes</a>
+                <a href="#signature">Midnight Oud</a>
+                <a href="#">Contact</a>
+                <a href="#">Instagram</a>
+                <a href="#">Privacy</a>
+            </nav>
+            <div class="footer-meta">
+                <p>Created for the hours between light and memory.</p>
+                <p class="copyright">&copy; 2026 P K / Élan Noir. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
